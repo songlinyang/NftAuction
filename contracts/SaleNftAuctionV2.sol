@@ -226,4 +226,8 @@ contract SaleNftAuction is Initializable,UUPSUpgradeable,IERC721Receiver,ISaleNf
         uint256 bidPrice = amount * uint(getChainlinkFeedLatestPrice(tokenAddress));
         emit CheckLatestprice(tokenAddress,amount,bidPrice);
     }
+    // 拍卖V2升级内容
+    function testHello() public pure returns(string memory){
+        return "Hello v2 Auction TO DO LIST";
+    }
 }

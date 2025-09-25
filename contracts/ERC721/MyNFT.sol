@@ -18,11 +18,6 @@ contract MyNFT is ERC721URIStorage {
 
         return tokenId;
     }
-    //个人EOA转合约
-    function safeTransferFrom(address from,address to,uint256 tokenId)external  returns (bool) {
-        
-    }
-    // 合约转EOA
     
 
 }
