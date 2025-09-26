@@ -50,6 +50,7 @@ MyNftSaleMarket/
 │   └── localhost/               # 本地网络部署信息
 ├── hardhat.config.js            # Hardhat配置
 └── package.json                 # 项目依赖
+└── .env                         # 全局环境变量配置文件 
 ```
 
 ## 智能合约说明
@@ -194,7 +195,7 @@ await auction.setAuctionPriceFeeds(ethers.ZeroAddress, chainlinkFeedAddress);
 ### 4. 参与拍卖
 ```javascript
 // 使用ETH出价
-await auction.buyerBid(auctionId, bidAmount, ethers.ZeroAddress, { value: bidAmount });
+await auction.buyerBid(auctionId, bidAmount, ethers.ZeroAddress);
 
 // 使用ERC20出价（需要先授权）
 await auction.buyerBid(auctionId, bidAmount, erc20TokenAddress);
