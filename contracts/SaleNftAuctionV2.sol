@@ -23,7 +23,7 @@ import "hardhat/console.sol";
  */
  //拍卖合约
 
-contract SaleNftAuction is Initializable,UUPSUpgradeable,IERC721Receiver,ISaleNftAuction{
+contract SaleNftAuctionV2 is Initializable,UUPSUpgradeable,IERC721Receiver,ISaleNftAuction{
 
     using MyConcat for uint256;
     address admin;
@@ -156,13 +156,16 @@ contract SaleNftAuction is Initializable,UUPSUpgradeable,IERC721Receiver,ISaleNf
  
         //退还上一个高价的钱给回出价者
         if(bidAuction.highestBidAmount>0){
+            //初始化ERC20
+            IERC20 preErc20 = IERC20(bidAuction.highestBidderAddr);
+            //授权合约
+            preErc20.approve(address(this),bidAuction.highestBidAmount);
             if(bidAuction.tokenAddress == address(0)){
                 //退还ETH
                 payable(bidAuction.highestBidderAddr).transfer(bidAuction.highestBidAmount);
             }else{
-                IERC20 preErc20 = IERC20(bidAuction.highestBidderAddr);
                 //退还ERC20
-                preErc20.transfer(bidAuction.highestBidderAddr,bidAuction.highestBidAmount);
+                preErc20.transferFrom(address(this),bidAuction.highestBidderAddr,bidAuction.highestBidAmount);
             }
         }
 

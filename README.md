@@ -102,6 +102,7 @@ npm install
 
 ### 2. 配置网络
 在 `hardhat.config.js` 中配置目标网络：
+结合infura进行测试网关联
 ```javascript
 module.exports = {
   networks: {
@@ -109,6 +110,10 @@ module.exports = {
       url: "http://127.0.0.1:8545"
     },
     // 添加其他网络配置...
+    sepolia: {
+      url:`https://sepolia.infura.io/v3/${process.env.INFURA_API_KEY}`,
+      accounts:[process.env.PK]
+    }
   }
 };
 ```
@@ -137,6 +142,10 @@ npx hardhat node
 # 在新终端中部署
 npx hardhat run deploy/auction/01_auction.js --network localhost
 npx hardhat run deploy/factory/01_factory.js --network localhost
+
+# 在sepolia测试网部署
+px hardhat run deploy/auction/01_auction.js --network sepolia
+npx hardhat run deploy/factory/01_factory.js --network sepolia
 ```
 
 ### 5. 测试合约
@@ -188,7 +197,6 @@ await auction.setAuctionPriceFeeds(ethers.ZeroAddress, chainlinkFeedAddress);
 await auction.buyerBid(auctionId, bidAmount, ethers.ZeroAddress, { value: bidAmount });
 
 // 使用ERC20出价（需要先授权）
-await erc20Token.approve(auctionAddress, bidAmount);
 await auction.buyerBid(auctionId, bidAmount, erc20TokenAddress);
 ```
 
